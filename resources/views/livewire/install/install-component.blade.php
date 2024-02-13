@@ -67,7 +67,7 @@ p {
 }
 
 #msform .action-button {
-    width: 100px;
+    width: 200px;
     background: #673AB7;
     font-weight: bold;
     color: white;
@@ -85,7 +85,7 @@ p {
 }
 
 #msform .action-button-previous {
-    width: 100px;
+    width: 200px;
     background: #616161;
     font-weight: bold;
     color: white;
@@ -215,6 +215,7 @@ p {
     object-fit: cover
 }
     </style>
+       
     <div class="container">
         <div class="row justify-content-center">
             <div class="card">
@@ -224,44 +225,80 @@ p {
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row justify-content-center">
-                            <div class="col-12 col-sm-10 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
+                            <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 text-center p-0 mt-3 mb-2">
                                 <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                                   
+                                    <h2 id="heading">Sign Up Your User Account</h2>
+                                    <p>Fill all form field to go to next step</p>
                                     <form id="msform">
                                         <!-- progressbar -->
                                         <ul id="progressbar">
-                                            @foreach($formHeaders as $key=$header)
-                                            <li @if($getStep==$key-1) class="active" @endif id="account"><strong>Account</strong></li>
-                                            @endforeach
+                                            <li class="active" id="account"><strong>Account</strong></li>
                                             <li id="personal"><strong>Personal</strong></li>
                                             <li id="payment"><strong>Image</strong></li>
                                             <li id="confirm"><strong>Finish</strong></li>
+                                           
                                         </ul>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{$width}}%;" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div> <br> <!-- fieldsets -->
-                                        <fieldset>
-                                            <div class="form-card">
-                                                 <label class="fieldlabels">Email: *</label> <input type="email" name="email" placeholder="Email Id" /> 
-                                                 <label class="fieldlabels">Username: *</label> <input type="text" name="uname" placeholder="UserName" />
-                                                  <label class="fieldlabels">Password: *</label> <input type="password" name="pwd" placeholder="Password" />
-                                                   <label class="fieldlabels">Confirm Password: *</label>
-                                                    <input type="password" name="cpwd" placeholder="Confirm Password" />
-                                            </div> 
-                                            <input type="button" name="next" class="next action-button" value="Next" />
+                                        <div class="spinner-border" role="status" wire:loading>
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
+                                            @if($getStep==1)
+                                            <fieldset>
+                                            @if(!$connStatus)
+                                            <livewire:install.config-database-component/>
+                                            @endif 
+                                            @if($connStatus)
+                                            <ul class="list-group">
+                                                <li class="list-group-item"><i class="fa fa-check"></i> Cras justo odio</li>
+                                                <li class="list-group-item"><i class="fa fa-check"></i> Dapibus ac facilisis in</li>
+                                                <li class="list-group-item"><i class="fa fa-check"></i> Morbi leo risus</li>
+                                                <li class="list-group-item"><i class="fa fa-check"></i> Porta ac consectetur ac</li>
+                                                <li class="list-group-item">Vestibulum at eros</li>
+                                              </ul>
+                                            @endif 
+                                            @if($tablesFound)
+                                            <ul class="list-group">
+                                                <li class="list-group-item text-danger"><i class="fa fa-times text-danger"></i>{{count($tables)}} Tables Found <p wire:click="clearDb" style="cursor:pointer;margin-top:15px;">Click Here To Delete</p></li>
+                                              
+                                              </ul>
+                                            @endif
+                                        @if(!$connStatus && $getStep==1)
+                                            <input type="button" name="next" wire:click="checkConnection" class="next action-button" value="Check Connection" />
+                                        @endif
+                                        @if(!$dbCheck && $connStatus)
+                                            <input type="button" name="next" class="next action-button" wire:click="checkDatabase" value="Check Database" />
+                                        @endif 
+                                        @if($connStatus && $dbCheck) 
+                                        <input type="button" name="next" class="next action-button" wire:click="nextStep" value="Next" />
+                                        @endif
+                                        
                                         </fieldset>
+                                            @endif 
+                                          
+
+                                        @if($getStep==2)
                                         <fieldset>
                                             <div class="form-card">
-                                                <label class="fieldlabels">First Name: *</label> 
-                                                <input type="text" name="fname" placeholder="First Name" /> 
-                                                <label class="fieldlabels">Last Name: *</label> <input type="text" name="lname" placeholder="Last Name" /> 
-                                                <label class="fieldlabels">Contact No.: *</label> <input type="text" name="phno" placeholder="Contact No." />
+                                                <div class="row">
+                                                    <div class="col-7">
+                                                        <h2 class="fs-title">Personal Information:</h2>
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <h2 class="steps">Step 2 - 4</h2>
+                                                    </div>
+                                                </div> <label class="fieldlabels">First Name: *</label> <input type="text" name="fname" placeholder="First Name" />
+                                                 <label class="fieldlabels">Last Name: *</label> <input type="text" name="lname" placeholder="Last Name" />
+                                                 <label class="fieldlabels">Contact No.: *</label> <input type="text" name="phno" placeholder="Contact No." /> 
                                                  <label class="fieldlabels">Alternate Contact No.: *</label> 
                                                  <input type="text" name="phno_2" placeholder="Alternate Contact No." />
-                                            </div> 
-                                            <input type="button" name="next" class="next action-button" value="Next" /> 
-                                            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                            </div>
+                                             <input type="button" name="next" class="next action-button" wire:click="emitMethod('3')" value="Next" />
+                                              <input type="button" name="previous" class="previous action-button-previous" wire:click="emitMethod('1')" value="Previous" />
                                         </fieldset>
+                                        @endif
+                                        @if($getStep==3)
                                         <fieldset>
                                             <div class="form-card">
                                                 <div class="row">
@@ -271,9 +308,13 @@ p {
                                                     <div class="col-5">
                                                         <h2 class="steps">Step 3 - 4</h2>
                                                     </div>
-                                                </div> <label class="fieldlabels">Upload Your Photo:</label> <input type="file" name="pic" accept="image/*"> <label class="fieldlabels">Upload Signature Photo:</label> <input type="file" name="pic" accept="image/*">
-                                            </div> <input type="button" name="next" class="next action-button" value="Submit" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                                                </div> <label class="fieldlabels">Upload Your Photo:</label> <input type="file" name="pic" accept="image/*"> 
+                                                <label class="fieldlabels">Upload Signature Photo:</label> <input type="file" name="pic" accept="image/*">
+                                            </div> <input type="button" name="next" class="next action-button" wire:click="emitMethod('4')" value="Submit" />
+                                             <input type="button" name="previous" class="previous action-button-previous" wire:click="emitMethod('2')" value="Previous" />
                                         </fieldset>
+                                        @endif
+                                        @if($getStep==4)
                                         <fieldset>
                                             <div class="form-card">
                                                 <div class="row">
@@ -295,6 +336,7 @@ p {
                                                 </div>
                                             </div>
                                         </fieldset>
+                                        @endif
                                     </form>
                                 </div>
                             </div>
@@ -305,88 +347,5 @@ p {
             </div>
         </div>
     </div>
-@push('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script>
-$(document).ready(function(){
-
-var current_fs, next_fs, previous_fs; //fieldsets
-var opacity;
-var current = '{{$getStep}}';
-var steps = $("fieldset").length;
-
-setProgressBar(current);
-$("#progressbar li").removeClass("active");
-$("#progressbar li").eq(current - 1).addClass("active");
-
-$(".next").click(function(){
-
-current_fs = $(this).parent();
-next_fs = $(this).parent().next();
-
-//Add Class Active
-$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-//show the next fieldset
-next_fs.show();
-//hide the current fieldset with style
-current_fs.animate({opacity: 0}, {
-step: function(now) {
-// for making fielset appear animation
-opacity = 1 - now;
-
-current_fs.css({
-'display': 'none',
-'position': 'relative'
-});
-next_fs.css({'opacity': opacity});
-},
-duration: 500
-});
-setProgressBar(++current);
-});
-
-$(".previous").click(function(){
-
-current_fs = $(this).parent();
-previous_fs = $(this).parent().prev();
-
-//Remove class active
-$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
-//show the previous fieldset
-previous_fs.show();
-
-//hide the current fieldset with style
-current_fs.animate({opacity: 0}, {
-step: function(now) {
-// for making fielset appear animation
-opacity = 1 - now;
-
-current_fs.css({
-'display': 'none',
-'position': 'relative'
-});
-previous_fs.css({'opacity': opacity});
-},
-duration: 500
-});
-setProgressBar(--current);
-});
-
-function setProgressBar(curStep){
-var percent = parseFloat(100 / steps) * curStep;
-percent = percent.toFixed();
-$(".progress-bar")
-.css("width",percent+"%")
-}
-
-$(".submit").click(function(){
-return false;
-})
-
-});
-    </script>
-@endpush
 </div>

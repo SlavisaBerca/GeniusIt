@@ -4,7 +4,9 @@ namespace App\Livewire\Install;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\DB;
 use App\Services\Install\LanguageService;
+use App\Livewire\Install\ConfigDatabaseComponent;
 
 class InstallComponent extends Component
 {
@@ -13,51 +15,64 @@ class InstallComponent extends Component
     public $content;
 
     public $dbChecked;
-    public $getStep =1;
+    public $width;
+    public $tablesFound;
+    public $getStep= 1;
+    public $dbCheck;
+    public $tables = [];
+    public $dbDatabase;
+    public $connStatus = false;
 
+
+ 
     public $formHeaders = [
         '1'=>'Config Database',
         '2'=>'Register Admin',
         '3'=>'Set Details',
         '4'=>'Complete Settings',
     ];
-
+    
     public function render()
     {
+        
         return view('livewire.install.install-component')->layout('livewire.layouts.install.app');
-    }
-    #[On('updateEnv')]
-    public function updateEnv()
+    }  
+
+    public function checkConnection()
     {
-        Artisan::call('config:clear');
-       
+        $this->dispatch('checkConn');
+    }
+    #[On('connChecked')]
+    public function connectionChecked()
+    {
+        $this->connStatus = true;
+        $this->dispatch('updateEnv');
+    }
+    #[On('connFailed')]
+    public function connectionFailed()
+    {
+        $this->connStatus = false;
+    }
+ 
+    public function checkDatabase()
+    {
+        $this->dispatch('checkDb')->to(ConfigDatabaseComponent::class);
+    }
+    
+    #[On('tablesFound')]
+    public function tablesFound()
+    {
+        $this->tablesFound = true;
+    }
+    #[On('dbChecked')]
+    public function dbChecked()
+    {
         $this->dbChecked = true;
-
-
     }
-
-    #[On('langChanged')]
-    public function langChanged($path)
-    {
-        $this->langPath = $path;
-        $this->content = LanguageService::getContent($this->langPath);
-    }
-    public function emitMethod($param)
-    {
-        if($param==1)
-        {
-            $this->dispatch('checkDataBase');
-        }
-    }
-
-    #[On('paramChanged')]
-    public function paramChanged($param)
-    {
-        $this->getStep = $param;
-    }
-
+   
     public function mount()
     {
+        $this->width = 25;
         $this->langPath = LanguageService::getLang();
         $this->content = LanguageService::getContent($this->langPath);
     }
