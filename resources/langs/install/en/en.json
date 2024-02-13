@@ -1,0 +1,23 @@
+{
+    "head":{
+        "site_title":"GENIUS-IT EN",
+        "meta_tags":"It, Software, Solution,Show,App,Webiste,EN",
+        "meta_description":"Solutie Software Multifunctionala EN"
+    },
+    "body":{
+        "sections":{    
+            "1":{
+                "section_title":"Database Config",
+                "description":"This is the eng section description for database configuration EN"
+            },
+            "2":{
+                "section_title":"User Registration",
+                "description":"U must register one Administrator User on app install"
+            }
+        }   
+       
+    },
+    "buttons":{
+        "install_app":"Start"
+    }
+}

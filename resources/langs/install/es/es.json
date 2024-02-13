@@ -1,0 +1,23 @@
+{
+    "head":{
+        "site_title":"GENIUS-IT ES",
+        "meta_tags":"It, Software, Solution,Show,App,Webiste,ES",
+        "meta_description":"Solutie Software Multifunctionala ES"
+    },
+    "body":{
+        "sections":{    
+            "1":{
+                "section_title":"Database Config",
+                "description":"This is the eng section description for database configuration ES"
+            },
+            "2":{
+                "section_title":"User Inregistration",
+                "description":"Tienes aver on usar quando installare app ES"
+            }
+        }   
+       
+    },
+    "buttons":{
+        "install_app":"Appreszar"
+    }
+}

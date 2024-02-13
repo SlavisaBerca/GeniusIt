@@ -1,0 +1,23 @@
+{
+    "head":{
+        "site_title":"GENIUS-IT RO",
+        "meta_tags":"It, Software, Solution,Show,App,Webiste",
+        "meta_description":"Solutie Software Multifunctionala RO"
+    },
+    "body":{
+        "sections":{    
+            "1":{
+                "section_title":"Database Config",
+                "description":"This is the eng section description for database configuration RO"
+            },
+            "2":{
+                "section_title":"User Inregistration",
+                "description":"Inregistrarea unui admin este necesara"
+            }
+        }   
+       
+    },
+    "buttons":{
+        "install_app":"Incepe"
+    }
+}

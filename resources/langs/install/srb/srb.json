@@ -1,0 +1,23 @@
+{
+    "head":{
+        "site_title":"GENIUS-IT SRB",
+        "meta_tags":"It, Software, Solution,Show,App,Webiste,SRB",
+        "meta_description":"Solutie Software Multifunctionala"
+    },
+    "body":{
+        "sections":{    
+            "1":{
+                "section_title":"Configuracija Baze Podataka",
+                "description":"This is the eng section description for database configuration SRB"
+            },
+            "2":{
+                "section_title":"Admin Registracija",
+                "description":"Tienes aver on usar quando installare app SRB"
+            }
+        }   
+       
+    },
+    "buttons":{
+        "install_app":"Zapocni"
+    }
+}
